@@ -22,10 +22,10 @@ st.set_page_config(
 # --------------------------
 # BRAND COLORS (from logo)
 # --------------------------
-GREEN       = "#00E676"   # bright green from logo circle
+GREEN       = "#00E676"
 GREEN_DARK  = "#00C853"
 GREEN_DEEP  = "#00796B"
-CHARCOAL    = "#333D42"   # dark text color from logo
+CHARCOAL    = "#333D42"
 WHITE       = "#FFFFFF"
 LIGHT_BG    = "#F5FAF7"
 CARD_BG     = "#FFFFFF"
@@ -61,6 +61,11 @@ html, body, [class*="css"] {{
 #MainMenu {{ visibility: hidden; }}
 header {{ visibility: hidden; }}
 footer {{ visibility: hidden; }}
+
+/* Hide sidebar collapse arrow — we handle toggle manually */
+[data-testid="collapsedControl"] {{
+    display: none !important;
+}}
 
 /* App background */
 .stApp {{
@@ -142,12 +147,26 @@ footer {{ visibility: hidden; }}
     transform: translateY(-1px) !important;
 }}
 
-/* File uploader */
+/* File uploader — dark theme to match sidebar */
 [data-testid="stFileUploader"] {{
-    background: {CARD_BG} !important;
+    background: rgba(255,255,255,0.10) !important;
     border: 2px dashed {GREEN} !important;
     border-radius: 12px !important;
     padding: 12px !important;
+}}
+[data-testid="stFileUploader"] * {{
+    color: #E8F5E9 !important;
+}}
+[data-testid="stFileUploader"] small,
+[data-testid="stFileUploader"] span {{
+    color: #A5D6A7 !important;
+    font-size: 11px !important;
+}}
+[data-testid="stFileUploader"] button {{
+    background: {GREEN} !important;
+    color: {CHARCOAL} !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
 }}
 
 /* Login card */
@@ -257,7 +276,6 @@ if "logged_in" not in st.session_state:
 # LOGIN PAGE
 # --------------------------
 if not st.session_state.logged_in:
-    # Centered logo for login
     if logo_b64:
         st.markdown(f"""
         <div style="text-align:center;margin:40px 0 8px;">
@@ -300,22 +318,34 @@ if not st.session_state.logged_in:
 render_header(show_full=True)
 
 # --------------------------
+# SIDEBAR TOGGLE STATE
+# --------------------------
+if "sidebar_open" not in st.session_state:
+    st.session_state.sidebar_open = True
+
+# --------------------------
 # SIDEBAR
 # --------------------------
 with st.sidebar:
-    if logo_b64:
-        st.markdown(f"""
-        <div style="text-align:center;padding:16px 0 20px;">
-            <img src="data:image/jpeg;base64,{logo_b64}" style="height:52px;object-fit:contain;filter:brightness(1.1);" />
-            <div style="font-size:10px;color:#A5D6A7;letter-spacing:2px;text-transform:uppercase;margin-top:8px;">Dashboard Controls</div>
-        </div>
-        """, unsafe_allow_html=True)
+    # Toggle button always visible at top
+    if st.button("☰  Menu", use_container_width=True):
+        st.session_state.sidebar_open = not st.session_state.sidebar_open
 
-    st.markdown("---")
-    st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Data</p>', unsafe_allow_html=True)
-    # File uploader always visible
-    file = st.file_uploader("Upload Excel File", type=["xlsx"])
-    st.markdown("---")
+    if st.session_state.sidebar_open:
+        if logo_b64:
+            st.markdown(f"""
+            <div style="text-align:center;padding:16px 0 20px;">
+                <img src="data:image/jpeg;base64,{logo_b64}" style="height:52px;object-fit:contain;filter:brightness(1.1);" />
+                <div style="font-size:10px;color:#A5D6A7;letter-spacing:2px;text-transform:uppercase;margin-top:8px;">Dashboard Controls</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+        st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Data</p>', unsafe_allow_html=True)
+        file = st.file_uploader("Upload Excel File", type=["xlsx"])
+        st.markdown("---")
+    else:
+        file = None
 
 # --------------------------
 # NO FILE UPLOADED STATE
@@ -328,7 +358,7 @@ if not file:
     ">
         <div style="font-size:36px;margin-bottom:12px;">📂</div>
         <div style="font-family:Poppins,sans-serif;font-size:18px;font-weight:600;color:{CHARCOAL};margin-bottom:8px;">Upload Your Data</div>
-        <div style="font-size:13px;color:{MUTED};">Upload an Excel (.xlsx) file with columns: District, Center, Members, Latitude, Longitude</div>
+        <div style="font-size:13px;color:{CHARCOAL};">Upload an Excel (.xlsx) file with columns: District, Center, Members, Latitude, Longitude</div>
     </div>
     """, unsafe_allow_html=True)
     st.stop()
@@ -343,43 +373,49 @@ if not required.issubset(df.columns):
     st.stop()
 
 # --------------------------
-# SIDEBAR FILTERS
+# SIDEBAR FILTERS (only when open)
 # --------------------------
 with st.sidebar:
-    st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Filters</p>', unsafe_allow_html=True)
+    if st.session_state.sidebar_open:
+        st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Filters</p>', unsafe_allow_html=True)
 
-    districts = st.multiselect(
-        "District",
-        df["District"].unique(),
-        default=df["District"].unique()
-    )
-    filtered_df = df[df["District"].isin(districts)]
+        districts = st.multiselect(
+            "District",
+            df["District"].unique(),
+            default=df["District"].unique()
+        )
+        filtered_df = df[df["District"].isin(districts)]
 
-    centers = st.multiselect(
-        "Center",
-        filtered_df["Center"].unique(),
-        default=filtered_df["Center"].unique()
-    )
-    filtered_df = filtered_df[filtered_df["Center"].isin(centers)]
+        centers = st.multiselect(
+            "Center",
+            filtered_df["Center"].unique(),
+            default=filtered_df["Center"].unique()
+        )
+        filtered_df = filtered_df[filtered_df["Center"].isin(centers)]
 
-    st.markdown("---")
-    st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Map Options</p>', unsafe_allow_html=True)
-    show_labels = st.checkbox("Show Center Labels", value=True)
-    show_heatmap = st.checkbox("Show Heatmap", value=False)
+        st.markdown("---")
+        st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Map Options</p>', unsafe_allow_html=True)
+        show_labels  = st.checkbox("Show Center Labels", value=True)
+        show_heatmap = st.checkbox("Show Heatmap", value=False)
+    else:
+        # Defaults when sidebar is collapsed
+        filtered_df  = df.copy()
+        show_labels  = True
+        show_heatmap = False
 
 # --------------------------
 # KPI METRICS
 # --------------------------
-total_members  = int(filtered_df["Members"].sum())
-total_centers  = len(filtered_df["Center"].unique())
+total_members   = int(filtered_df["Members"].sum())
+total_centers   = len(filtered_df["Center"].unique())
 total_districts = len(filtered_df["District"].unique())
-avg_per_center = int(filtered_df["Members"].mean()) if len(filtered_df) > 0 else 0
+avg_per_center  = int(filtered_df["Members"].mean()) if len(filtered_df) > 0 else 0
 
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("Total Members",    f"{total_members:,}")
-col2.metric("Active Centers",   f"{total_centers:,}")
-col3.metric("Districts",        f"{total_districts:,}")
-col4.metric("Avg per Center",   f"{avg_per_center:,}")
+col1.metric("Total Members",  f"{total_members:,}")
+col2.metric("Active Centers", f"{total_centers:,}")
+col3.metric("Districts",      f"{total_districts:,}")
+col4.metric("Avg per Center", f"{avg_per_center:,}")
 
 st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
@@ -404,7 +440,7 @@ if show_heatmap:
         gradient={"0.0": "green", "0.5": "yellow", "1.0": "red"}
     ).add_to(m)
 
-# Dots rendered ON TOP of heatmap
+# Dots + labels rendered ON TOP of heatmap
 for _, row in filtered_df.iterrows():
     tooltip_html = f"""<div style="
         font-family: 'Inter', sans-serif;
@@ -424,7 +460,7 @@ for _, row in filtered_df.iterrows():
         </span>
     </div>"""
 
-    # Smaller dots (radius 4), high-contrast dark navy color so visible on heatmap
+    # Small dot, high-contrast navy — visible on top of heatmap
     folium.CircleMarker(
         location=[row["Latitude"], row["Longitude"]],
         radius=4,
@@ -437,8 +473,10 @@ for _, row in filtered_df.iterrows():
     ).add_to(m)
 
     if show_labels:
+        # Same coords as dot — CSS top/left offset pins label just above-right
+        # at every zoom level (no coordinate drift)
         folium.Marker(
-            location=[row["Latitude"] + 0.04, row["Longitude"]],
+            location=[row["Latitude"], row["Longitude"]],
             icon=folium.DivIcon(
                 html=f"""<div style="
                     font-family: 'Inter', sans-serif;
@@ -452,9 +490,12 @@ for _, row in filtered_df.iterrows():
                     white-space: nowrap;
                     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
                     pointer-events: none;
+                    position: relative;
+                    top: -22px;
+                    left: 8px;
                 ">{row['Center']}</div>""",
                 icon_size=(120, 20),
-                icon_anchor=(60, 20)
+                icon_anchor=(0, 0)
             )
         ).add_to(m)
 
@@ -557,7 +598,6 @@ try:
         mime="application/pdf",
     )
 except Exception:
-    # Fallback: export Excel file
     import io
     excel_buf = io.BytesIO()
     filtered_df[["District", "Center", "Members"]].to_excel(excel_buf, index=False)
