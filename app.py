@@ -260,22 +260,31 @@ def export_pdf(df):
         status = str(row.get("Church project status", "")).strip().upper()
         bg = (245, 250, 247) if i % 2 == 0 else (255, 255, 255)
         pdf.set_fill_color(*bg)
+
         pdf.cell(40, 7, str(row["District"]), border=1, fill=True)
         pdf.cell(50, 7, str(row["Center"]),   border=1, fill=True)
         pdf.cell(55, 7, str(row["Branch"]),   border=1, fill=True)
+
         if status == "COMPLETE":
-            pdf.set_fill_color(200, 240, 210); pdf.set_text_color(20, 100, 40)
+            pdf.set_fill_color(200, 240, 210)
+            pdf.set_text_color(20, 100, 40)
         else:
-            pdf.set_fill_color(255, 210, 210); pdf.set_text_color(160, 20, 20)
+            pdf.set_fill_color(255, 210, 210)
+            pdf.set_text_color(160, 20, 20)
+
         pdf.cell(45, 7, status.capitalize(), border=1, fill=True, align="C")
-        pdf.set_fill_color(*bg); pdf.set_text_color(0, 0, 0)
+
+        pdf.set_fill_color(*bg)
+        pdf.set_text_color(0, 0, 0)
         pdf.ln()
 
     pdf.ln(6)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(120, 120, 120)
     pdf.cell(0, 6, "CrossLife Ministries Malawi (c) 2026", align="C")
-    return bytes(pdf.output())
+
+    # ✅ FIX FOR STREAMLIT CLOUD
+    return pdf.output(dest="S").encode("latin-1")
 
 # --------------------------
 # LOGIN
