@@ -43,7 +43,7 @@ def get_logo_base64():
 logo_b64 = get_logo_base64()
 
 # --------------------------
-# GLOBAL CSS
+# GLOBAL CSS  (Code 2 design)
 # --------------------------
 st.markdown(f"""
 <style>
@@ -57,153 +57,148 @@ html, body, [class*="css"] {{
 
 /* Hide default Streamlit chrome */
 #MainMenu {{ visibility: hidden; }}
-header {{ visibility: hidden; }}
-footer {{ visibility: hidden; }}
+header   {{ visibility: hidden; }}
+footer   {{ visibility: hidden; }}
 
-/* Sidebar — always open, collapse arrow hidden */
+/* ── STATIC SIDEBAR ── */
 [data-testid="collapsedControl"] {{ display: none !important; }}
 section[data-testid="stSidebar"] {{
-    transform: none !important;
-    visibility: visible !important;
-    display: block !important;
-    min-width: 250px !important;
-    width: 250px !important;
-    position: relative !important;
+    transform:    none !important;
+    visibility:   visible !important;
+    display:      block !important;
+    min-width:    260px !important;
+    width:        260px !important;
+    position:     relative !important;
 }}
 section[data-testid="stSidebar"][aria-expanded="false"] {{
     margin-left: 0 !important;
-    transform: none !important;
+    transform:   none !important;
 }}
 
 /* App background */
 .stApp {{ background-color: {LIGHT_BG}; }}
 
-/* Sidebar */
+/* Sidebar base */
 [data-testid="stSidebar"] {{
-    background: {CHARCOAL} !important;
+    background:   {CHARCOAL} !important;
     border-right: 3px solid {GREEN} !important;
-    min-width: 250px !important;
+    min-width:    260px !important;
 }}
 [data-testid="stSidebar"] * {{ color: #E8F5E9 !important; }}
 [data-testid="stSidebar"] .stSelectbox label,
 [data-testid="stSidebar"] .stMultiSelect label,
 [data-testid="stSidebar"] .stCheckbox label {{
-    color: #A5D6A7 !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
+    color:          #A5D6A7 !important;
+    font-size:      12px !important;
+    font-weight:    500 !important;
     letter-spacing: 0.8px !important;
     text-transform: uppercase !important;
 }}
 [data-testid="stSidebar"] [data-baseweb="select"] {{
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(0,230,118,0.3) !important;
+    background:    rgba(255,255,255,0.08) !important;
+    border:        1px solid rgba(0,230,118,0.3) !important;
     border-radius: 8px !important;
 }}
 [data-testid="stSidebar"] .stCheckbox {{
-    background: rgba(255,255,255,0.05);
+    background:    rgba(255,255,255,0.05);
     border-radius: 8px;
-    padding: 4px 8px;
+    padding:       4px 8px;
 }}
 
 /* File uploader */
 [data-testid="stFileUploader"] {{
-    background: rgba(255,255,255,0.10) !important;
-    border: 2px dashed {GREEN} !important;
+    background:    rgba(255,255,255,0.10) !important;
+    border:        2px dashed {GREEN} !important;
     border-radius: 12px !important;
-    padding: 12px !important;
+    padding:       12px !important;
 }}
 [data-testid="stFileUploader"] * {{ color: #E8F5E9 !important; }}
 [data-testid="stFileUploader"] small,
 [data-testid="stFileUploader"] span {{ color: #A5D6A7 !important; font-size: 11px !important; }}
 [data-testid="stFileUploader"] button {{
-    background: {GREEN} !important;
-    color: {CHARCOAL} !important;
+    background:    {GREEN} !important;
+    color:         {CHARCOAL} !important;
     border-radius: 6px !important;
-    font-weight: 600 !important;
+    font-weight:   600 !important;
 }}
 
 /* Main content */
 .block-container {{
-    padding: 1.5rem 2rem 2rem !important;
+    padding:   1.5rem 2rem 2rem !important;
     max-width: 100% !important;
 }}
 
 /* Metric cards */
 [data-testid="metric-container"] {{
-    background: {CARD_BG} !important;
-    border: 1px solid {BORDER} !important;
+    background:    {CARD_BG} !important;
+    border:        1px solid {BORDER} !important;
     border-radius: 12px !important;
-    padding: 16px 20px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    padding:       16px 20px !important;
+    box-shadow:    0 2px 8px rgba(0,0,0,0.04) !important;
 }}
 [data-testid="metric-container"] [data-testid="stMetricValue"] {{
     font-family: 'Poppins', sans-serif !important;
-    font-size: 28px !important;
+    font-size:   28px !important;
     font-weight: 700 !important;
-    color: {GREEN_DEEP} !important;
+    color:       {GREEN_DEEP} !important;
 }}
 [data-testid="metric-container"] [data-testid="stMetricLabel"] {{
-    font-size: 11px !important;
-    font-weight: 500 !important;
+    font-size:      11px !important;
+    font-weight:    500 !important;
     letter-spacing: 1px !important;
     text-transform: uppercase !important;
-    color: {MUTED} !important;
+    color:          {MUTED} !important;
 }}
 
 /* Buttons */
 .stButton > button {{
-    background: {GREEN} !important;
-    color: {CHARCOAL} !important;
-    font-weight: 600 !important;
-    border: none !important;
+    background:    {GREEN} !important;
+    color:         {CHARCOAL} !important;
+    font-weight:   600 !important;
+    border:        none !important;
     border-radius: 8px !important;
-    padding: 10px 24px !important;
-    font-size: 13px !important;
-    transition: all 0.2s ease !important;
-    box-shadow: 0 2px 8px rgba(0,230,118,0.25) !important;
+    padding:       10px 24px !important;
+    font-size:     13px !important;
+    transition:    all 0.2s ease !important;
+    box-shadow:    0 2px 8px rgba(0,230,118,0.25) !important;
 }}
 .stButton > button:hover {{
     background: {GREEN_DARK} !important;
     box-shadow: 0 4px 14px rgba(0,230,118,0.4) !important;
-    transform: translateY(-1px) !important;
+    transform:  translateY(-1px) !important;
 }}
 
 /* Section headers */
 .section-header {{
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: {CHARCOAL};
+    font-family:    'Poppins', sans-serif;
+    font-size:      15px;
+    font-weight:    600;
+    color:          {CHARCOAL};
     letter-spacing: 0.3px;
-    margin-bottom: 12px;
+    margin-bottom:  12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid {GREEN};
-    display: inline-block;
-    background: transparent !important;
+    border-bottom:  2px solid {GREEN};
+    display:        inline-block;
+    background:     transparent !important;
 }}
 
 /* Inputs */
 .stTextInput input, .stPasswordInput input {{
     border-radius: 8px !important;
-    border: 1px solid {BORDER} !important;
-    font-size: 13px !important;
+    border:        1px solid {BORDER} !important;
+    font-size:     13px !important;
 }}
 .stTextInput input:focus, .stPasswordInput input:focus {{
     border-color: {GREEN} !important;
-    box-shadow: 0 0 0 2px rgba(0,230,118,0.2) !important;
+    box-shadow:   0 0 0 2px rgba(0,230,118,0.2) !important;
 }}
 
 /* Mobile responsive */
 @media (max-width: 768px) {{
     .block-container {{ padding: 0.5rem 0.8rem !important; }}
-    [data-testid="stSidebar"] {{
-        min-width: 100% !important;
-        width: 100% !important;
-    }}
+    [data-testid="stSidebar"] {{ min-width: 100% !important; width: 100% !important; }}
     [data-testid="metric-container"] {{ padding: 10px 12px !important; }}
-    [data-testid="metric-container"] [data-testid="stMetricValue"] {{
-        font-size: 20px !important;
-    }}
+    [data-testid="metric-container"] [data-testid="stMetricValue"] {{ font-size: 20px !important; }}
     .section-header {{ font-size: 13px !important; }}
     div[data-testid="column"] {{ min-width: 100% !important; }}
 }}
@@ -248,34 +243,38 @@ def export_pdf(df):
 
     pdf.set_fill_color(51, 61, 66)
     pdf.set_text_color(255, 255, 255)
-    pdf.set_font("Helvetica", "B", 14)
-    pdf.cell(0, 12, "CrossLife Ministries — Member Data", ln=True, fill=True, align="C")
+    pdf.set_font("Helvetica", "B", 13)
+    pdf.cell(0, 12, "CrossLife Ministries - Branch Project Status", ln=True, fill=True, align="C")
     pdf.ln(4)
 
     pdf.set_fill_color(0, 200, 83)
     pdf.set_text_color(51, 61, 66)
-    pdf.set_font("Helvetica", "B", 10)
-    for col, w in [("District", 60), ("Center", 90), ("Members", 40)]:
+    pdf.set_font("Helvetica", "B", 9)
+    for col, w in [("District", 40), ("Center", 50), ("Branch", 55), ("Status", 45)]:
         pdf.cell(w, 9, col, border=1, fill=True)
     pdf.ln()
 
-    pdf.set_font("Helvetica", "", 9)
+    pdf.set_font("Helvetica", "", 8)
     pdf.set_text_color(0, 0, 0)
     for i, row in df.reset_index(drop=True).iterrows():
-        if i % 2 == 0:
-            pdf.set_fill_color(245, 250, 247)
+        status = str(row.get("Church project status", "")).strip().upper()
+        bg = (245, 250, 247) if i % 2 == 0 else (255, 255, 255)
+        pdf.set_fill_color(*bg)
+        pdf.cell(40, 7, str(row["District"]), border=1, fill=True)
+        pdf.cell(50, 7, str(row["Center"]),   border=1, fill=True)
+        pdf.cell(55, 7, str(row["Branch"]),   border=1, fill=True)
+        if status == "COMPLETE":
+            pdf.set_fill_color(200, 240, 210); pdf.set_text_color(20, 100, 40)
         else:
-            pdf.set_fill_color(255, 255, 255)
-        pdf.cell(60, 7, str(row["District"]),     border=1, fill=True)
-        pdf.cell(90, 7, str(row["Center"]),       border=1, fill=True)
-        pdf.cell(40, 7, str(int(row["Members"])), border=1, fill=True, align="R")
+            pdf.set_fill_color(255, 210, 210); pdf.set_text_color(160, 20, 20)
+        pdf.cell(45, 7, status.capitalize(), border=1, fill=True, align="C")
+        pdf.set_fill_color(*bg); pdf.set_text_color(0, 0, 0)
         pdf.ln()
 
     pdf.ln(6)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(120, 120, 120)
-    pdf.cell(0, 6, "CrossLife Ministries Malawi © 2026", align="C")
-
+    pdf.cell(0, 6, "CrossLife Ministries Malawi (c) 2026", align="C")
     return bytes(pdf.output())
 
 # --------------------------
@@ -325,7 +324,7 @@ if not st.session_state.logged_in:
 render_header()
 
 # --------------------------
-# SIDEBAR — always open
+# SIDEBAR — static, always open
 # --------------------------
 with st.sidebar:
     if logo_b64:
@@ -356,7 +355,7 @@ if not file:
     ">
         <div style="font-size:36px;margin-bottom:12px;">📂</div>
         <div style="font-family:Poppins,sans-serif;font-size:18px;font-weight:600;color:{CHARCOAL};margin-bottom:8px;">Upload Your Data</div>
-        <div style="font-size:13px;color:{MUTED};">Upload an Excel (.xlsx) file with columns:<br><strong>District, Center, Members, Latitude, Longitude</strong></div>
+        <div style="font-size:13px;color:{MUTED};">Upload an Excel (.xlsx) file with columns:<br><strong>District, Center, Branch, Church project status, Latitude, Longitude</strong></div>
     </div>
     """, unsafe_allow_html=True)
     st.stop()
@@ -365,41 +364,77 @@ if not file:
 # LOAD + VALIDATE DATA
 # --------------------------
 df = pd.read_excel(file)
-required = {"District", "Center", "Members", "Latitude", "Longitude"}
+
+# Forward-fill District and Center so branch rows inherit parent values
+df["District"] = df["District"].ffill()
+df["Center"]   = df["Center"].ffill()
+
+# Normalise column names
+df.columns = [c.strip() for c in df.columns]
+
+# Rename status column if slightly different
+status_col = next((c for c in df.columns if "status" in c.lower()), None)
+if status_col and status_col != "Church project status":
+    df = df.rename(columns={status_col: "Church project status"})
+
+required = {"District", "Center", "Branch", "Church project status", "Latitude", "Longitude"}
 if not required.issubset(df.columns):
-    st.error(f"Missing columns. File must contain: {', '.join(required)}")
+    missing = required - set(df.columns)
+    st.error("Missing columns: " + ", ".join(missing))
     st.stop()
+
+# Normalise status
+df["Church project status"] = df["Church project status"].astype(str).str.strip().str.upper()
+
+# Center-level df: rows that have coordinates
+center_df = df.dropna(subset=["Latitude", "Longitude"]).copy()
+if "Members" in center_df.columns:
+    center_df["Members"] = pd.to_numeric(center_df["Members"], errors="coerce").fillna(0)
+else:
+    center_df["Members"] = 0
+
+# Full branch df
+branch_df = df.copy()
 
 # --------------------------
 # SIDEBAR FILTERS
 # --------------------------
 with st.sidebar:
     st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Filters</p>', unsafe_allow_html=True)
+
+    districts = st.multiselect("District", sorted(center_df["District"].unique()), default=sorted(center_df["District"].unique()))
+    filtered_centers = center_df[center_df["District"].isin(districts)]
+
+    centers = st.multiselect("Center", sorted(filtered_centers["Center"].unique()), default=sorted(filtered_centers["Center"].unique()))
+    filtered_centers = filtered_centers[filtered_centers["Center"].isin(centers)]
+
+    filtered_branches = branch_df[
+        branch_df["District"].isin(districts) &
+        branch_df["Center"].isin(centers)
+    ]
+
     st.markdown("---")
     st.markdown('<p style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#A5D6A7;margin-bottom:4px;">Map Options</p>', unsafe_allow_html=True)
     show_labels  = st.checkbox("Show Center Labels", value=True)
     show_heatmap = st.checkbox("Show Heatmap", value=False)
 
-    districts = st.multiselect("District", df["District"].unique(), default=df["District"].unique())
-    filtered_df = df[df["District"].isin(districts)]
-
-    centers = st.multiselect("Center", filtered_df["Center"].unique(), default=filtered_df["Center"].unique())
-    filtered_df = filtered_df[filtered_df["Center"].isin(centers)]
-
-
 # --------------------------
 # KPIs
 # --------------------------
-total_members   = int(filtered_df["Members"].sum())
-total_centers   = len(filtered_df["Center"].unique())
-total_districts = len(filtered_df["District"].unique())
-avg_per_center  = int(filtered_df["Members"].mean()) if len(filtered_df) > 0 else 0
+total_members    = int(filtered_centers["Members"].sum())
+total_centers    = len(filtered_centers["Center"].unique())
+total_districts  = len(filtered_centers["District"].unique())
+total_branches   = len(filtered_branches["Branch"].dropna().unique())
+complete_count   = (filtered_branches["Church project status"] == "COMPLETE").sum()
+incomplete_count = (filtered_branches["Church project status"] == "INCOMPLETE").sum()
 
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Total Members",  f"{total_members:,}")
-c2.metric("Active Centers", f"{total_centers:,}")
-c3.metric("Districts",      f"{total_districts:,}")
-c4.metric("Avg per Center", f"{avg_per_center:,}")
+c1, c2, c3, c4, c5, c6 = st.columns(6)
+c1.metric("Total Members",       f"{total_members:,}")
+c2.metric("Centers",             f"{total_centers:,}")
+c3.metric("Districts",           f"{total_districts:,}")
+c4.metric("Total Branches",      f"{total_branches:,}")
+c5.metric("Complete Projects",   f"{complete_count:,}")
+c6.metric("Incomplete Projects", f"{incomplete_count:,}")
 
 st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
@@ -409,37 +444,67 @@ st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 st.markdown('<div class="section-header">📍 Geographic Distribution</div>', unsafe_allow_html=True)
 
 m = folium.Map(
-    location=[filtered_df["Latitude"].mean(), filtered_df["Longitude"].mean()],
+    location=[filtered_centers["Latitude"].mean(), filtered_centers["Longitude"].mean()],
     zoom_start=7,
     tiles="CartoDB Positron"
 )
 
-# Heatmap rendered first so dots appear on top
+# Heatmap first so dots render on top — Code 2 gradient style
 if show_heatmap:
-    heat_data = [[r["Latitude"], r["Longitude"], r["Members"]] for _, r in filtered_df.iterrows()]
-    HeatMap(heat_data, radius=25, blur=15,
-            gradient={"0.0": "green", "0.5": "yellow", "1.0": "red"}).add_to(m)
+    heat_data = [[r["Latitude"], r["Longitude"], r["Members"]] for _, r in filtered_centers.iterrows()]
+    HeatMap(
+        heat_data,
+        radius=25,
+        blur=15,
+        gradient={"0.0": "green", "0.5": "yellow", "1.0": "red"}
+    ).add_to(m)
 
-for _, row in filtered_df.iterrows():
+for _, row in filtered_centers.iterrows():
+    center_name = row["Center"]
+    members_val = int(row.get("Members", 0))
+
+    # Branches for this center
+    branches = filtered_branches[filtered_branches["Center"] == center_name][
+        ["Branch", "Church project status"]
+    ].dropna(subset=["Branch"])
+
+    branch_rows = ""
+    for _, b in branches.iterrows():
+        status = str(b["Church project status"]).strip().upper()
+        color  = "#00C853" if status == "COMPLETE" else "#E53935"
+        dot    = f'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{color};margin-right:5px;vertical-align:middle;"></span>'
+        branch_rows += (
+            f'<div style="display:flex;align-items:center;padding:2px 0;">'
+            f'{dot}<span style="font-size:10px;color:#333;">{b["Branch"]} '
+            f'<span style="color:{color};font-weight:600;">({status.capitalize()})</span></span></div>'
+        )
+
     tooltip_html = f"""
     <div style="font-family:Inter,sans-serif;font-size:12px;font-weight:600;
-        color:{CHARCOAL};background:white;padding:6px 10px;border-radius:6px;
-        border-left:3px solid {GREEN};box-shadow:0 2px 8px rgba(0,0,0,0.12);white-space:nowrap;">
-        {row['Center']}<br>
-        <span style="font-weight:400;color:{MUTED};font-size:11px;">
-            {row['District']} · {int(row['Members'])} members
+        color:{CHARCOAL};background:white;padding:8px 12px;border-radius:8px;
+        border-left:3px solid {GREEN};box-shadow:0 2px 10px rgba(0,0,0,0.15);min-width:190px;">
+        {center_name}<br>
+        <span style="font-weight:400;color:{MUTED};font-size:10px;">
+            {row['District']} · {members_val:,} members
         </span>
+        <div style="margin-top:6px;border-top:1px solid #eee;padding-top:5px;">
+            <div style="font-size:9px;color:{MUTED};letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;">Branches</div>
+            {branch_rows if branch_rows else '<span style="font-size:10px;color:#aaa;">No branches listed</span>'}
+        </div>
     </div>"""
+
+    all_complete = (branches["Church project status"] == "COMPLETE").all() if len(branches) > 0 else False
+    dot_color    = GREEN if all_complete else "#FFB300"
 
     folium.CircleMarker(
         location=[row["Latitude"], row["Longitude"]],
         radius=6,
         color=GREEN_DEEP,
         fill=True,
-        fill_color=GREEN,
-        fill_opacity=0.9,
+        fill_color=dot_color,
+        fill_opacity=0.95,
         weight=2,
-        tooltip=folium.Tooltip(tooltip_html, sticky=False),
+        tooltip=folium.Tooltip(tooltip_html, sticky=True),
     ).add_to(m)
 
     if show_labels:
@@ -447,22 +512,13 @@ for _, row in filtered_df.iterrows():
             location=[row["Latitude"], row["Longitude"]],
             icon=folium.DivIcon(
                 html=f"""<div style="
-                    font-family:Inter,sans-serif;
-                    font-size:10px;
-                    font-weight:600;
-                    color:#000000;
-                    background:rgba(255,255,255,0.88);
-                    padding:2px 6px;
-                    border-radius:4px;
-                    border:1px solid {BORDER};
-                    white-space:nowrap;
-                    box-shadow:0 1px 4px rgba(0,0,0,0.1);
-                    pointer-events:none;
-                    position:relative;
-                    top:-22px;
-                    left:8px;
-                ">{row['Center']}</div>""",
-                icon_size=(120, 20),
+                    font-family:Inter,sans-serif;font-size:10px;font-weight:600;
+                    color:#000000;background:rgba(255,255,255,0.88);
+                    padding:2px 6px;border-radius:4px;border:1px solid {BORDER};
+                    white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,0.1);
+                    pointer-events:none;position:relative;top:-22px;left:8px;
+                ">{center_name}</div>""",
+                icon_size=(140, 20),
                 icon_anchor=(0, 0)
             )
         ).add_to(m)
@@ -481,7 +537,7 @@ CHART_COLORS = [GREEN, GREEN_DARK, GREEN_DEEP, "#69F0AE", "#00BFA5", "#1B5E20", 
 chart_col1, chart_col2 = st.columns(2)
 
 with chart_col1:
-    pie_data = filtered_df.groupby("District")["Members"].sum().reset_index()
+    pie_data = filtered_centers.groupby("District")["Members"].sum().reset_index()
     fig1 = px.pie(pie_data, values="Members", names="District",
                   title="Members by District",
                   color_discrete_sequence=CHART_COLORS, hole=0.42)
@@ -496,7 +552,7 @@ with chart_col1:
     st.plotly_chart(fig1, use_container_width=True)
 
 with chart_col2:
-    bar_data = filtered_df.groupby("Center")["Members"].sum().reset_index().sort_values("Members", ascending=True)
+    bar_data = filtered_centers.groupby("Center")["Members"].sum().reset_index().sort_values("Members", ascending=True)
     fig2 = px.bar(bar_data, x="Members", y="Center", orientation="h",
                   title="Members per Center", color="Members",
                   color_continuous_scale=[[0, "#B2DFDB"], [0.5, GREEN], [1, GREEN_DEEP]])
@@ -514,13 +570,42 @@ with chart_col2:
     st.plotly_chart(fig2, use_container_width=True)
 
 # --------------------------
-# DATA TABLE
+# DATA TABLE — Branch Project Status
 # --------------------------
-st.markdown('<div class="section-header">📋 Data Table</div>', unsafe_allow_html=True)
-st.dataframe(
-    filtered_df[["District", "Center", "Members"]].sort_values("Members", ascending=False).reset_index(drop=True),
-    use_container_width=True,
-    height=220,
+st.markdown('<div class="section-header">📋 Branch Project Status</div>', unsafe_allow_html=True)
+
+display_df = (
+    filtered_branches[["District", "Center", "Branch", "Church project status"]]
+    .dropna(subset=["Branch"])
+    .reset_index(drop=True)
+)
+
+# Fix: use map() instead of deprecated applymap()
+def color_status(val):
+    val = str(val).strip().upper()
+    if val == "COMPLETE":
+        return "background-color:#E8F5E9;color:#1B5E20;font-weight:600;"
+    elif val == "INCOMPLETE":
+        return "background-color:#FFEBEE;color:#B71C1C;font-weight:600;"
+    return ""
+
+styled = display_df.style.map(color_status, subset=["Church project status"])
+st.dataframe(styled, use_container_width=True, height=320)
+
+# --------------------------
+# EXPORT
+# --------------------------
+st.markdown('<div class="section-header">⬇ Export</div>', unsafe_allow_html=True)
+
+pdf_bytes = export_pdf(
+    filtered_branches[["District", "Center", "Branch", "Church project status"]]
+    .dropna(subset=["Branch"])
+)
+st.download_button(
+    label="Export as PDF",
+    data=pdf_bytes,
+    file_name="crosslife_branches.pdf",
+    mime="application/pdf",
 )
 
 # --------------------------
