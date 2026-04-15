@@ -247,6 +247,7 @@ def export_pdf(df):
     pdf.cell(0, 12, "CrossLife Ministries - Branch Project Status", ln=True, fill=True, align="C")
     pdf.ln(4)
 
+    # Header
     pdf.set_fill_color(0, 200, 83)
     pdf.set_text_color(51, 61, 66)
     pdf.set_font("Helvetica", "B", 9)
@@ -254,10 +255,21 @@ def export_pdf(df):
         pdf.cell(w, 9, col, border=1, fill=True)
     pdf.ln()
 
+    # Data rows
     pdf.set_font("Helvetica", "", 8)
     pdf.set_text_color(0, 0, 0)
+
+    complete_count = 0
+    incomplete_count = 0
+
     for i, row in df.reset_index(drop=True).iterrows():
         status = str(row.get("Church project status", "")).strip().upper()
+
+        if status == "COMPLETE":
+            complete_count += 1
+        elif status == "INCOMPLETE":
+            incomplete_count += 1
+
         bg = (245, 250, 247) if i % 2 == 0 else (255, 255, 255)
         pdf.set_fill_color(*bg)
 
@@ -278,14 +290,31 @@ def export_pdf(df):
         pdf.set_text_color(0, 0, 0)
         pdf.ln()
 
-    pdf.ln(6)
+    # --------------------------
+    # TOTALS SECTION
+    # --------------------------
+    pdf.ln(4)
+
+    pdf.set_font("Helvetica", "B", 10)
+
+    # Complete
+    pdf.set_fill_color(200, 240, 210)
+    pdf.set_text_color(20, 100, 40)
+    pdf.cell(0, 8, f"Total Completed Projects: {complete_count}", ln=True, fill=True)
+
+    # Incomplete
+    pdf.set_fill_color(255, 210, 210)
+    pdf.set_text_color(160, 20, 20)
+    pdf.cell(0, 8, f"Total Incomplete Projects: {incomplete_count}", ln=True, fill=True)
+
+    # Footer
+    pdf.ln(4)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(120, 120, 120)
     pdf.cell(0, 6, "CrossLife Ministries Malawi (c) 2026", align="C")
 
-    # ✅ FIX FOR STREAMLIT CLOUD
+    # ✅ Streamlit Cloud fix
     return pdf.output(dest="S").encode("latin-1")
-
 # --------------------------
 # LOGIN
 # --------------------------
